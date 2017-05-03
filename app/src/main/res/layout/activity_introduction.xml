@@ -6,13 +6,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.davidgod93.homepost.IntroductionActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/ai_image_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/postman"
+        android:contentDescription="@string/ai_image_logo_cd"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/ai_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/ai_login"
+        android:onClick="start"/>
+
+    <ImageView
+        android:id="@+id/ai_register_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/ai_login"
+        android:paddingEnd="10dp"
+        android:paddingStart="0dp"
+        android:contentDescription="@string/ai_register_user_cd"
+        android:src="@drawable/bocata_izq"
+        android:gravity="start"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/ai_register_user"
+        android:onClick="start"
+        android:adjustViewBounds="true"/>
+
+    <ImageView
+        android:id="@+id/ai_register_bussiness"
+        android:src="@drawable/bocata_der"
+        android:layout_toEndOf="@id/ai_login"
+        android:gravity="end"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:contentDescription="@string/ai_register_bussiness_cd"
+        android:layout_marginTop="10dp"
+        android:text="@string/ai_register_bussiness"
+        android:onClick="start"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
 </RelativeLayout>

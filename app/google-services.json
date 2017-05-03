@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "971527160581",
+    "firebase_url": "https://homepost-b57cd.firebaseio.com",
+    "project_id": "homepost-b57cd",
+    "storage_bucket": "homepost-b57cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971527160581:android:bc61d3d27e749655",
+        "android_client_info": {
+          "package_name": "com.davidgod93.homepost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971527160581-1prroa2ha221a9fj4bajle06kkdj9s8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.davidgod93.homepost",
+            "certificate_hash": "b472ebc5bd35ad7723363a343c35d00f75ac9e0e"
+          }
+        },
+        {
+          "client_id": "971527160581-33ph2od00n4l8n4e63elh1g7l9rp48id.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.davidgod93.homepost",
+            "certificate_hash": "5c53e24a855b1c0e447bbb5314b1458c1eed210d"
+          }
+        },
+        {
+          "client_id": "971527160581-7hg62oqdioj31jcrteulqba2ve94d943.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDtjGLqmOAQuAox8ICoU1NwTQ-HLg3dXM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971527160581-7hg62oqdioj31jcrteulqba2ve94d943.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
