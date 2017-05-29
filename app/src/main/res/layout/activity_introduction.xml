@@ -1,68 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_introduction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.davidgod93.homepost.IntroductionActivity">
 
     <ImageView
         android:id="@+id/ai_image_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
         android:src="@drawable/postman"
         android:contentDescription="@string/ai_image_logo_cd"
         android:scaleType="fitCenter"/>
 
-    <TextView
-        android:id="@+id/ai_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:text="@string/ai_login"
-        android:onClick="start"/>
-
-    <ImageView
-        android:id="@+id/ai_register_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/ai_login"
-        android:paddingEnd="10dp"
-        android:paddingStart="0dp"
-        android:contentDescription="@string/ai_register_user_cd"
-        android:src="@drawable/bocata_izq"
-        android:gravity="start"
-        android:layout_alignParentTop="true"
+    <LinearLayout
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/ai_register_user"
-        android:onClick="start"
-        android:adjustViewBounds="true"/>
-
-    <ImageView
-        android:id="@+id/ai_register_bussiness"
-        android:src="@drawable/bocata_der"
-        android:layout_toEndOf="@id/ai_login"
-        android:gravity="end"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:paddingStart="10dp"
-        android:paddingEnd="0dp"
-        android:contentDescription="@string/ai_register_bussiness_cd"
-        android:layout_marginTop="10dp"
-        android:text="@string/ai_register_bussiness"
-        android:onClick="start"
-        android:adjustViewBounds="true"
+        android:layout_toStartOf="@+id/ai_image_logo"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="login"
+            android:layout_width="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/ai_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/ai_login_cd"
+                android:cropToPadding="false"
+                app:srcCompat="@drawable/login"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ai_login"
+                android:layout_centerHorizontal="true"
+                android:text="@string/ai_login"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="register"
+            android:layout_width="wrap_content">
+
+            <ImageView
+                android:id="@+id/ai_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/ai_register_cd"
+                app:srcCompat="@drawable/register"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ai_register"
+                android:layout_centerHorizontal="true"
+                android:text="@string/ai_register"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

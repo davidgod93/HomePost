@@ -29,7 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.davidgod93.utils.Chest;
+import com.davidgod93.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -279,8 +279,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 	public void end(boolean status, int type, boolean login, FirebaseUser user, String pass) {
 		if (status && login) {
 			assert user != null;
-			Toast.makeText(this, "Sesión iniciada como "+user.getEmail(), Toast.LENGTH_SHORT).show();
-			Chest.myId = user.getUid();
 			if(cb.isChecked()) {
 				SharedPreferences.Editor e = p.edit();
 				e.putString("mail", user.getEmail());
@@ -288,7 +286,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 				e.putBoolean("autologin", true);
 				e.apply();
 			}
-			startActivity(new Intent(this, MainMenuActivity.class));
+			Intent i = new Intent(this, MainMenuActivity.class);
+			i.putExtra(User.USER_UID, user.getUid());
+			startActivity(i);
 			finish();
 		} else if (status) {
 			assert user != null;
@@ -300,7 +300,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 			u.child("imagen").setValue(-1);
 			u.child("token").setValue(PreferenceManager.getDefaultSharedPreferences(this).getString("token", null));
 			Toast.makeText(this, "Registro completado. Ya puedes iniciar sesión.", Toast.LENGTH_SHORT).show();
-			Chest.first = true;
 			startActivity(new Intent(this, IntroductionActivity.class));
 			finish();
 		} else if(type == -2) {

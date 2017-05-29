@@ -19,9 +19,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
+            android:title="@string/title_activity_mainmenu"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <!-- Waiting initial layout -->
+        <LinearLayout
+            android:id="@+id/amm_loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/activity_main_menu_toolbar"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <include layout="@layout/undefined_progress_layout"/>
+
+        </LinearLayout>
+
+        <!-- Layout for clients -->
+        <LinearLayout
+            android:id="@+id/amm_client_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/activity_main_menu_toolbar"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/amm_action_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="generateOrder"
+                android:text="@string/organizar_una_recogida"/>
+
+            <Button
+                android:id="@+id/amm_action_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="showListOrders"
+                android:text="@string/mostrar_estado_de_mis_env_os"/>
+
+        </LinearLayout>
+
+        <!-- Layout for workers -->
+        <LinearLayout
+            android:id="@+id/amm_worker_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/activity_main_menu_toolbar"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/amm_action_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/mostrar_trabajos_cercanos"/>
+
+            <Button
+                android:id="@+id/amm_action_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="showListOrders"
+                android:text="@string/mostrar_estado_de_mis_trabajos"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

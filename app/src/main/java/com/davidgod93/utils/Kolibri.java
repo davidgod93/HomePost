@@ -1,29 +1,16 @@
-package com.davidgod93.kolibri;
+package com.davidgod93.utils;
 
 import android.app.Activity;
-import android.content.Context;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by David on 13/02/2017.
@@ -51,7 +38,8 @@ public class Kolibri {
 	public static class Request {
 
 		private String url, params;  //Only GET implemented
-		private Response.Listener callback;
+		private Response.Listener<JSONObject> callbackJson;
+		private Response.Listener<String> callbackString;
 		private Response.ErrorListener error;
 		private Activity c;
 		private RequestQueue q;
@@ -76,8 +64,13 @@ public class Kolibri {
 			return this;
 		}
 
-		public Request onResponse(Response.Listener toRun) {
-			this.callback = toRun;
+		public Request onResponseJson(Response.Listener<JSONObject> toRun) {
+			this.callbackJson = toRun;
+			return this;
+		}
+
+		public Request onResponseString(Response.Listener<String> toRun) {
+			this.callbackString = toRun;
 			return this;
 		}
 
@@ -94,8 +87,8 @@ public class Kolibri {
 		public void start() {
 			com.android.volley.Request r;
 			r = asJson ?
-					new JsonObjectRequest(getUrl(), null, callback, error) :
-					new StringRequest(getUrl(), callback, error);
+					new JsonObjectRequest(getUrl(), null, callbackJson, error) :
+					new StringRequest(getUrl(), callbackString, error);
 			q.add(r);
 		}
 

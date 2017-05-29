@@ -16,11 +16,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.davidgod93.objects.User;
 import com.davidgod93.objects.Users;
+import com.davidgod93.utils.Chest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,45 +33,45 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.util.Map;
-
 @SuppressWarnings("ResourceType")
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+	FirebaseDatabase db;
 	DrawerLayout draw;
 	Users u;
+	String myId;
+	View p, c, w;
+
+	/**
+	 * Posibilidad de añadir un usuario al hacer un envío. Así notificaría también al destinatario del progreso
+	 * Layout de mapas para localizar las propuestas cercanas, y para asignar un punto a la recogida
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-
-		Toolbar toolBar = (Toolbar) findViewById(R.id.activity_main_menu_toolbar);
-		toolBar.setTitle(R.string.app_name);
-		setSupportActionBar(toolBar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		draw = (DrawerLayout) findViewById(R.id.activity_main_menu_drawer);
-		draw.setScrimColor(Color.TRANSPARENT);
-		ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, draw, toolBar, R.string.ai_register_user, R.string.ai_register_bussiness);
-		t.setDrawerIndicatorEnabled(true);
-		draw.addDrawerListener(t);
-		t.syncState();
+		db = FirebaseDatabase.getInstance();
+		p = findViewById(R.id.amm_loading_view);
+		c = findViewById(R.id.amm_client_view);
+		w = findViewById(R.id.amm_worker_view);
 		((NavigationView)findViewById(R.id.activity_main_menu_sidebar)).setNavigationItemSelectedListener(this);
+		setToggleActionBar();
 
-		FirebaseDatabase db = FirebaseDatabase.getInstance();
-		db.getReference("users").addValueEventListener(new ValueEventListener() {
-			@Override
-			public void onDataChange(DataSnapshot dataSnapshot) {
-				JSONObject j = parseDBResponse(dataSnapshot);
-				u = new Users(j);
-				setUserData(u.getMyself());
-			}
+		if(savedInstanceState != null){
+			myId = savedInstanceState.getString(User.USER_UID);
+		}
+		else {
+			myId = getIntent().getStringExtra(User.USER_UID);
+		}
 
-			@Override
-			public void onCancelled(DatabaseError databaseError) {
+		getUserInfo();
+	}
 
-			}
-		});
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString(User.USER_UID, myId);
 	}
 
 	@Override
@@ -76,16 +79,17 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
 		switch (item.getItemId()) {
 			case R.id.ndm_preferences:
-				Intent i = new Intent(MainMenuActivity.this, ProfileActivity.class);
-				i.putExtra(User.INTENT_TAG, u.getMyself().serialize());
-				startActivity(i);
+				startActivity(new Intent(MainMenuActivity.this, ProfileActivity.class).putExtra(User.INTENT_TAG, u.getMyself().serialize()));
+				break;
+			case R.id.ndm_credits:
+				startActivity(new Intent(MainMenuActivity.this, CreditsActivity.class));
 				break;
 			case R.id.ndm_logout:
 				new AlertDialog.Builder(MainMenuActivity.this)
 						.setTitle("¿Estas seguro?")
 						.setMessage("Esta acción cerrará tu sesión actual")
 						.setPositiveButton("Cerrar sesión", new DialogInterface.OnClickListener() {
-							@SuppressLint("CommitPrefEdits")
+							@SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								SharedPreferences.Editor e = PreferenceManager.getDefaultSharedPreferences(MainMenuActivity.this).edit();
@@ -119,7 +123,36 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void setUserData(User u) {
+	private void getUserInfo() {
+		db.getReference("users").addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				JSONObject j = Chest.parseDBResponse(dataSnapshot);
+				u = new Users(j, myId);
+				setUserData(u.getMyself());
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+
+			}
+		});
+	}
+
+	private void setToggleActionBar() {
+		Toolbar toolBar = (Toolbar) findViewById(R.id.activity_main_menu_toolbar);
+		//toolBar.setTitle(R.string.title_activity_mainmenu);
+		setSupportActionBar(toolBar);
+		if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		draw = (DrawerLayout) findViewById(R.id.activity_main_menu_drawer);
+		draw.setScrimColor(Color.TRANSPARENT);
+		ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, draw, toolBar, R.string.ai_register_user, R.string.ai_register_bussiness);
+		t.setDrawerIndicatorEnabled(true);
+		draw.addDrawerListener(t);
+		t.syncState();
+	}
+
+	private void setUserData(final User u) {
 		if(u.isNewUser())
 			new AlertDialog.Builder(this)
 					.setTitle("Lo primero de todo")
@@ -127,7 +160,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 					.setPositiveButton("Vamos", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(MainMenuActivity.this, ProfileActivity.class));
+							startActivity(new Intent(MainMenuActivity.this, ProfileActivity.class).putExtra(User.INTENT_TAG, u.serialize()));
 							dialog.dismiss();
 						}
 					})
@@ -140,11 +173,20 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 			n.setText(u.name);
 			m.setText(u.mail);
 			if(u.hasImage()) Picasso.with(this).load(u.image).error(R.drawable.avatar_bald).into(i);
+			Toast.makeText(this, "Sesión iniciada como "+u.name, Toast.LENGTH_SHORT).show();
+			p.setVisibility(View.GONE);
+			if(u.isWorker()) w.setVisibility(View.VISIBLE);
+			else if(u.isClient()) c.setVisibility(View.VISIBLE);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private JSONObject parseDBResponse(DataSnapshot dataSnapshot) {
-		return new JSONObject((Map<String, String>) dataSnapshot.getValue());
+	public void generateOrder(View v) {
+		startActivity(new Intent(this, GenerateOrderActivity.class));
+	}
+
+	public void showListOrders(View v) {
+		startActivity(new Intent(this, ShowOrdersActivity.class)
+				.putExtra(User.INTENT_TAG, u.getMyself().serialize())
+				.putExtra(User.USER_ASSOC, u.getNamesMap()));
 	}
 }

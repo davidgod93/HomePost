@@ -15,7 +15,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/ap_avatar"
@@ -28,10 +30,28 @@
             app:srcCompat="@drawable/avatar_bald"/>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/ap_til_3"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ap_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="@string/address"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/ap_til_1"
+            android:layout_above="@id/ap_til_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
             android:padding="5dp">
@@ -40,6 +60,7 @@
                 android:id="@+id/ap_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:hint="@string/email"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -56,6 +77,7 @@
                 android:id="@+id/ap_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapWords"
                 android:hint="@string/username"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -69,6 +91,18 @@
             android:onClick="changeImage"
             app:fabSize="normal"
             app:srcCompat="@android:drawable/ic_popup_sync"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnChangeAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_alignBottom="@id/ap_til_3"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:onClick="changeAddress"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_mylocation"/>
 
     </RelativeLayout>
 

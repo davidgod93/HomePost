@@ -14,11 +14,14 @@ import android.widget.ImageView;
 import com.davidgod93.objects.User;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+
 public class ProfileActivity extends AppCompatActivity {
 
 	private static final int AVATAR_REQUEST_CODE = 55545;
+	private static final int MAP_REQUEST_CODE = 22340;
 	private User u;
-	private EditText name, mail;
+	private EditText name, mail, address;
 	private ImageView avatar;
 
 	@Override
@@ -28,16 +31,25 @@ public class ProfileActivity extends AppCompatActivity {
 		u = User.deserialize(getIntent().getStringExtra(User.INTENT_TAG));
 		name = (EditText) findViewById(R.id.ap_name);
 		mail = (EditText) findViewById(R.id.ap_mail);
+		address = (EditText) findViewById(R.id.ap_address);
 		avatar = (ImageView) findViewById(R.id.ap_avatar);
 		setUserValues();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(AVATAR_REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
-			u.image = data.getIntExtra("AVATAR", -1);
-			Picasso.with(this).load(u.image).into(avatar);
+		if(resultCode == RESULT_OK) {
+			if (AVATAR_REQUEST_CODE == requestCode) {
+				u.image = data.getIntExtra("AVATAR", -1);
+				Picasso.with(this).load(u.image).into(avatar);
+			}
+			else if (MAP_REQUEST_CODE == requestCode) {
+				u.lat = data.getDoubleExtra(MapSelectionActivity.LAT_KEY, 0.0);
+				u.lng = data.getDoubleExtra(MapSelectionActivity.LNG_KEY, 0.0);
+				address.setText(getLatitudeText(u.lat, u.lng));
+			}
 		}
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -58,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 						public void onClick(DialogInterface dialog, int which) {
 							u.name = name.getText().toString();
 							u.mail = mail.getText().toString();
-							u.updateInfo();
+							u.updateInfo(ProfileActivity.this);
 						}
 					})
 					.setNegativeButton("No", null)
@@ -77,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
 					public void onClick(DialogInterface dialog, int which) {
 						u.name = name.getText().toString();
 						u.mail = mail.getText().toString();
-						u.updateInfo();
+						u.updateInfo(ProfileActivity.this);
 						ProfileActivity.super.onBackPressed();
 					}
 				})
@@ -95,9 +107,19 @@ public class ProfileActivity extends AppCompatActivity {
 		startActivityForResult(new Intent(this, AvatarSelectionActivity.class), AVATAR_REQUEST_CODE);
 	}
 
+	public void changeAddress(View v) {
+		startActivityForResult(new Intent(this, MapSelectionActivity.class), MAP_REQUEST_CODE);
+	}
+
 	private void setUserValues() {
 		name.setText(u.name);
 		mail.setText(u.mail);
-		Picasso.with(this).load(u.image).into(avatar);
+		address.setText(getLatitudeText(u.lat, u.lng));
+		Picasso.with(this).load(u.image).error(User.DEFAULT_IMAGE).into(avatar);
+	}
+
+	private String getLatitudeText(double lt, double ln) {
+		DecimalFormat newFormat = new DecimalFormat("#.##");
+		return "lat("+Double.valueOf(newFormat.format(lt))+"),lng("+Double.valueOf(newFormat.format(ln))+")";
 	}
 }

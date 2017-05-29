@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3f88b5</color>
     <color name="colorPrimaryDark">#2c5592</color>
     <color name="colorAccent">#3ea0cd</color>
-    <color name="lightBlue">#ADD8E6</color>
-    <color name="colorBack">#EBFFFF</color>
+    <color name="lightBlue">#add8e6</color>
+    <color name="colorBack">#ebffff</color>
+    <color name="colorNavHeaderBack">#c9f3ff</color>
     <color name="colorNavBack">#dcf7ff</color>
     <color name="colorStatusBar">#3c81ad</color>
 </resources>

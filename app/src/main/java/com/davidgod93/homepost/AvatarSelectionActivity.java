@@ -18,7 +18,7 @@ public class AvatarSelectionActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_avatar_selection);
 		AvatarAdapter a = new AvatarAdapter(this, Arrays.asList(Chest.avatars));
 		RecyclerView r = (RecyclerView) findViewById(R.id.grid);
-		r.setLayoutManager(new GridLayoutManager(this, 1));
+		r.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
 		r.setAdapter(a);
 	}
 

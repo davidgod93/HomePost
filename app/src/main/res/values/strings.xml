@@ -1,8 +1,29 @@
 <resources>
+    <string-array name="registration_modes">
+        <item>Registrar como cliente</item>
+        <item>Registrar como empresa</item>
+    </string-array>
+    <string name="credits_txt">Esta aplicación ha sido desarrollada por David Zamora Villalobos como resultado final del Trabajo de Final de Grado.
+
+        El principal cometido de esta aplicación es dotar a los usuarios de una funcionalidad de recogida de paquetería desde su móvil. Es posible realizar la recogida, el seguimiento y el pago desde el dispositivo.
+        Toda la funcionalidad se sirve a través de la plataforma de Google Firebase. Usando la infraestructura que éste proporciona.
+
+		Esta aplicación utiliza el siguiente listado de librerías de terceros:
+        · Iconos de los avatares
+          Flaticon Basic License
+          (Madebyoliver)
+          http://www.flaticon.com/packs/hairstyles
+
+        · Imágenes de logística
+          Creative Commons
+          (Freepik)
+          http://www.freepik.com/free-vector/logistic-delivery-icons-set_718426.htm
+    </string>
     <string name="app_name">HomePost</string>
     <string name="ai_register_bussiness">Registrar como empresa</string>
     <string name="ai_register_user">Registrar como cliente</string>
     <string name="ai_login">Iniciar sesión</string>
+    <string name="ai_register">Darse de alta</string>
     <string name="ai_image_logo_cd">Imagen del logo de la aplicación</string>
     <string name="title_activity_login">Inicio de sesión</string>
     <string name="prompt_email">Correo electrónico</string>
@@ -24,8 +45,8 @@
     <string name="ndh_logout_btn_cd">Botón de cerrar sesión</string>
     <string name="ndh_profile_btn_cd">Botón de configuración de usuario</string>
     <string name="al_autologin">Iniciar sesión automáticamente</string>
-    <string name="ai_register_user_cd">Botón de registro como cliente</string>
-    <string name="ai_register_bussiness_cd">Botón de registro como empresa</string>
+    <string name="ai_login_cd">Botón de inicio de sesión</string>
+    <string name="ai_register_cd">Botón de registro</string>
     <string name="profile_img_cd">Imágen del perfil de usuario</string>
     <string name="username">Nombre del usuario</string>
     <string name="mail_addr">Dirección de correo</string>
@@ -37,4 +58,40 @@
     <string name="title_activity_credits">Creditos y atribuciones</string>
     <string name="title_activity_avatar_selector">Seleccione nueva imagen de perfil</string>
     <string name="title_activity_introduction">Bienvenido a Homepost</string>
+    <string name="ac_title_txt">Créditos y agradecimientos</string>
+    <string name="cr_ditos">Créditos</string>
+    <string name="title_activity_push_receiver">Centro de notificaciones</string>
+    <string name="organizar_una_recogida">Organizar una recogida</string>
+    <string name="mostrar_estado_de_mis_env_os">Mostrar estado de mis envíos</string>
+    <string name="mostrar_estado_de_mis_trabajos">Mostrar estado de mis trabajos</string>
+    <string name="realizando_tareas">Realizando tareas</string>
+    <string name="title_activity_generate_order">Generar un encargo</string>
+    <string name="title_activity_map_select">Selecciona la ubicación</string>
+    <string name="mostrar_trabajos_cercanos">Mostrar trabajos cercanos</string>
+    <string name="status_0_txt">En preparación</string>
+    <string name="status_1_txt">En tránsito</string>
+    <string name="status_2_txt">En almacén</string>
+    <string name="status_3_txt">En reparto</string>
+    <string name="status_4_txt">Entregado</string>
+    <string name="show_orders_no_data">No tienes aún ningúna interacción registrada aún. Animate y haz una</string>
+    <string name="show_orders_no_content_title">Sin contenido</string>
+    <string name="mostrar_informaci_n_de_env_o">Mostrar información de envío</string>
+    <string name="sample_text">TextView</string>
+    <string name="imagen_del_estado_del_env_o">Imagen del estado del envío</string>
+    <string name="remitente">Remitente:</string>
+    <string name="destinatario">Destinatario:</string>
+    <string name="encargado_del_reparto">Repartidor:</string>
+    <string name="descripci_n">Descripción:</string>
+    <string name="selecciona_un_env_o">Selecciona un envío</string>
+    <string name="mostrar_destino_del_paquete">Mostrar destino del paquete</string>
+    <string name="sin_receptor_especificado">Sin receptor especificado</string>
+    <string name="no_worker_yet">Sin trabajador asignado todavía</string>
+    <string name="without_description">*Sin descripción*</string>
+    <string name="title_activity_show_orders">Tus trámites</string>
+    <string name="direcci_n_de_entrega">Dirección de entrega:</string>
+    <string name="cambiar_env_o">Cambiar envío</string>
+    <string name="no_items_to_change">No se han encontrado más envíos en tu historial para seleccionar</string>
+    <string name="obtaining_location">Obteniendo tu ubicación</string>
+    <string name="fecha_de_creaci_n">Fecha de encargo:</string>
+    <string name="address">Dirección del usuario</string>
 </resources>

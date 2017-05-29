@@ -1,8 +1,10 @@
 package com.davidgod93.homepost;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -21,20 +23,24 @@ public class IntroductionActivity extends AppCompatActivity {
 		}
 	}
 
-	public void start(View v) {
-		Intent i = new Intent(this, LoginActivity.class);
-		switch (v.getId()) {
-			case R.id.ai_login:
-				i.putExtra(TAG, LoginActivity.LOGIN_ACT);
-				break;
-			case R.id.ai_register_bussiness:
-				i.putExtra(TAG, LoginActivity.REG_BUSS_ACT);
-				break;
-			case R.id.ai_register_user:
-				i.putExtra(TAG, LoginActivity.REG_USER_ACT);
-				break;
-		}
-		startActivity(i);
+	public void login(View v) {
+		start(LoginActivity.LOGIN_ACT);
+	}
+
+	public void register(View v) {
+		new AlertDialog.Builder(this)
+				.setTitle("Selecciona el tipo de cuenta")
+				.setItems(R.array.registration_modes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						start(which+1);
+					}
+				})
+				.show();
+	}
+
+	public void start(int type) {
+		startActivity(new Intent(this, LoginActivity.class).putExtra(TAG, type));
 		finish();
 	}
 }
