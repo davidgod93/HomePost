@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.davidgod93.objects.User;
+import com.davidgod93.utils.Logger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -107,7 +108,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 	@Override
 	public void onBackPressed() {
-		startActivity(new Intent(this, IntroductionActivity.class));
+		boolean b = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("autologin", false);
+		if (!b) startActivity(new Intent(this, IntroductionActivity.class));
 		super.onBackPressed();
 	}
 
@@ -288,6 +290,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 			}
 			Intent i = new Intent(this, MainMenuActivity.class);
 			i.putExtra(User.USER_UID, user.getUid());
+			DatabaseReference u = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+			String t = PreferenceManager.getDefaultSharedPreferences(this).getString("token", null);
+			Logger.info("Refreshing token ("+t+")");
+			u.child("token").setValue(t);
 			startActivity(i);
 			finish();
 		} else if (status) {

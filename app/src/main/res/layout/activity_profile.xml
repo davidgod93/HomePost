@@ -11,7 +11,7 @@
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.davidgod93.homepost.ProfileActivity">
+    tools:context="com.davidgod93.easytrans.ProfileActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,6 +35,7 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical"
             android:padding="5dp"
+            android:layout_toStartOf="@+id/btnChangeAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -42,6 +43,7 @@
                 android:id="@+id/ap_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:inputType="none"
                 android:hint="@string/address"/>
 
@@ -96,9 +98,9 @@
             android:id="@+id/btnChangeAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_alignBottom="@id/ap_til_3"
             android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
             android:clickable="true"
             android:onClick="changeAddress"
             app:fabSize="mini"

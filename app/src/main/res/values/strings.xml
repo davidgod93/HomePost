@@ -3,6 +3,13 @@
         <item>Registrar como cliente</item>
         <item>Registrar como empresa</item>
     </string-array>
+    <string-array name="status_modes">
+        <item>En preparación</item>
+        <item>En tránsito</item>
+        <item>En almacén</item>
+        <item>En reparto</item>
+        <item>Entregado</item>
+    </string-array>
     <string name="credits_txt">Esta aplicación ha sido desarrollada por David Zamora Villalobos como resultado final del Trabajo de Final de Grado.
 
         El principal cometido de esta aplicación es dotar a los usuarios de una funcionalidad de recogida de paquetería desde su móvil. Es posible realizar la recogida, el seguimiento y el pago desde el dispositivo.
@@ -19,7 +26,7 @@
           (Freepik)
           http://www.freepik.com/free-vector/logistic-delivery-icons-set_718426.htm
     </string>
-    <string name="app_name">HomePost</string>
+    <string name="app_name">Easytrans</string>
     <string name="ai_register_bussiness">Registrar como empresa</string>
     <string name="ai_register_user">Registrar como cliente</string>
     <string name="ai_login">Iniciar sesión</string>
@@ -94,4 +101,28 @@
     <string name="obtaining_location">Obteniendo tu ubicación</string>
     <string name="fecha_de_creaci_n">Fecha de encargo:</string>
     <string name="address">Dirección del usuario</string>
+    <string name="descripci_n_del_encargo">Descripción del encargo</string>
+    <string name="destino_del_paquete">Selecciona el destino del encargo</string>
+    <string name="introduce_los_datos_del_encargo">Introduce los datos del encargo</string>
+    <string name="identificador_del_receptor_si_se_conoce">Identificador del receptor (si se conoce)</string>
+    <string name="map_pick_button_cd">Map pick button</string>
+    <string name="generar_encargo">Generar encargo</string>
+    <string name="minimum_required">Lo mínimo es el destino del paquete</string>
+    <string name="everything_ok">Se va a publicar tu oferta, estás seguro que son todos los datos correctos</string>
+    <string name="publish_order">Publicar encargo</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="estado_del_encargo">Estado del encargo</string>
+    <string name="olm_change_status">Cambiar estado ...</string>
+    <string name="chat_text">Chat message element</string>
+    <string name="chatear_con_trabajador">Chatear con trabajador</string>
+    <string name="send">Enviar</string>
+    <string name="message_to_send">Mensaje a enviar</string>
+    <string name="title_activity_chat">Chat</string>
+    <string name="direcci_n_de_b_squeda">Dirección de búsqueda</string>
+    <string name="bot_n_de_b_squeda">Botón de búsqueda</string>
+    <string name="error_near_orders">No se han podido leer los encargos cercanos</string>
+    <string name="order_without_description">Encargo sin descripción</string>
+    <string name="retreiving_address">Obteniendo la dirección</string>
+    <string name="order_from">Encargo de</string>
 </resources>

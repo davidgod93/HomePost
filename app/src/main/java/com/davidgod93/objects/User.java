@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.davidgod93.homepost.R;
+import com.davidgod93.easytrans.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,15 +25,16 @@ public class User {
 								USER_UID = "uid";
 	private static final String TYPE_WORKER = "chofer",
 								TYPE_CLIENT = "usuario";
-	public String uid, name, mail, type;
+	public String uid, name, mail, type, token;
 	public int image;
-	public double lat, lng;
+	public double lat = Double.MIN_VALUE, lng = Double.MIN_VALUE;
 
-	User(String uid, String name, String mail, String type, int image, double latit, double longit) {
+	User(String uid, String name, String mail, String type, String token, int image, double latit, double longit) {
 		this.uid = uid;
 		this.name = name;
 		this.mail = mail;
 		this.type = type;
+		this.token = token;
 		this.image = image;
 		this.lat = latit;
 		this.lng = longit;
@@ -41,6 +42,10 @@ public class User {
 
 	public boolean isNewUser() {
 		return "Usuario anónimo".equals(name);
+	}
+
+	public boolean isLocationSet() {
+		return lat != Double.MIN_VALUE || lng != Double.MIN_VALUE;
 	}
 
 	public boolean hasImage() {
@@ -74,6 +79,7 @@ public class User {
 			j.put("name", name);
 			j.put("mail", mail);
 			j.put("type", type);
+			j.put("token", token);
 			j.put("image", image);
 			j.put("latitude", lat);
 			j.put("longitude", lng);
@@ -87,7 +93,7 @@ public class User {
 		User u = null;
 		try {
 			JSONObject j = new JSONObject(json);
-			u = new User(j.getString("uid"), j.getString("name"), j.getString("mail"), j.getString("type"), j.getInt("image"), j.getDouble("latitude"), j.getDouble("longitude"));
+			u = new User(j.getString("uid"), j.getString("name"), j.getString("mail"), j.getString("type"), j.getString("token"), j.getInt("image"), j.getDouble("latitude"), j.getDouble("longitude"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

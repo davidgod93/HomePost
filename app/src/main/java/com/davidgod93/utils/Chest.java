@@ -2,7 +2,7 @@ package com.davidgod93.utils;
 
 import android.support.annotation.DrawableRes;
 
-import com.davidgod93.homepost.R;
+import com.davidgod93.easytrans.R;
 import com.google.firebase.database.DataSnapshot;
 
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

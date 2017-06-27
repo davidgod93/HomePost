@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -41,6 +41,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 	Users u;
 	String myId;
 	View p, c, w;
+	boolean d = false;
 
 	/**
 	 * Posibilidad de añadir un usuario al hacer un envío. Así notificaría también al destinatario del progreso
@@ -173,7 +174,10 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 			n.setText(u.name);
 			m.setText(u.mail);
 			if(u.hasImage()) Picasso.with(this).load(u.image).error(R.drawable.avatar_bald).into(i);
-			Toast.makeText(this, "Sesión iniciada como "+u.name, Toast.LENGTH_SHORT).show();
+			if (d) {
+				Toast.makeText(this, "Sesión iniciada como "+u.name, Toast.LENGTH_SHORT).show();
+				d = false;
+			}
 			p.setVisibility(View.GONE);
 			if(u.isWorker()) w.setVisibility(View.VISIBLE);
 			else if(u.isClient()) c.setVisibility(View.VISIBLE);
@@ -181,12 +185,53 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 	}
 
 	public void generateOrder(View v) {
-		startActivity(new Intent(this, GenerateOrderActivity.class));
+		if (u.getMyself().isLocationSet()) {
+			startActivity(new Intent(this, GenerateOrderActivity.class)
+					.putExtra(User.INTENT_TAG, u.getMyself().serialize())
+					.putExtra(User.USER_ASSOC, u.getNamesMap()));
+		}
+		else new AlertDialog.Builder(this)
+				.setTitle("Configuración necesaria")
+				.setMessage("Antes de entrar aquí es necesaria tener configurada tu dirección.")
+				.setPositiveButton("Configurar ahora", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						startActivity(new Intent(MainMenuActivity.this, ProfileActivity.class).putExtra(User.INTENT_TAG, u.getMyself().serialize()));
+					}
+				})
+				.setNegativeButton("Cancelar", null)
+				.show();
+	}
+
+	public void nearOrders(View v) {
+		startActivity(new Intent(this, NearOrdersActivity.class)
+				.putExtra(User.INTENT_TAG, u.getMyself().serialize())
+				.putExtra(User.USER_ASSOC, u.getNamesMap()));
 	}
 
 	public void showListOrders(View v) {
 		startActivity(new Intent(this, ShowOrdersActivity.class)
 				.putExtra(User.INTENT_TAG, u.getMyself().serialize())
 				.putExtra(User.USER_ASSOC, u.getNamesMap()));
+	}
+
+	public void chatWithUser(View v) {
+		final String t = PreferenceManager.getDefaultSharedPreferences(this).getString("token", null);
+		chat(u.getNames(), u.getTokens(), t);
+	}
+
+	public void chat(final String[] names, final String dTokens[], final String mToken) {
+		new AlertDialog.Builder(this)
+				.setTitle("Selecciona destino")
+				.setItems(names, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						startActivity(new Intent(MainMenuActivity.this, ChatActivity.class)
+								.putExtra("token", dTokens[which])
+								.putExtra("mytoken", mToken)
+								.putExtra("name", u.getMyself().name));
+					}
+				})
+				.show();
 	}
 }

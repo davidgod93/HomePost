@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,5 +25,8 @@ public class CreditsActivity extends AppCompatActivity {
 	 *
 	 * Iconos notificación atribución
 	 * <a href="http://www.freepik.com/free-vector/logistic-delivery-icons-set_718426.htm">Designed by Freepik</a>
+	 *
+	 * ChatView
+	 * https://github.com/himanshu-soni/ChatMessageView
 	 * */
 }

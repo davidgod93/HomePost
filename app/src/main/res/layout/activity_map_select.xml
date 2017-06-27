@@ -4,12 +4,41 @@
                 android:layout_height="match_parent"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/ams_search_layout"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ams_search_btn"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:onClick="searchLocation"
+            android:src="@drawable/ic_search_blue_36dp"
+            android:contentDescription="@string/bot_n_de_b_squeda"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/ams_search"
+            android:maxLines="1"
+            android:lines="1"
+            android:inputType="textCapSentences"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/ams_search_btn"
+            android:hint="@string/direcci_n_de_b_squeda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/ams_map"
+        android:layout_below="@id/ams_search_layout"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.davidgod93.homepost.MapSelectionActivity"/>
+        tools:context="com.davidgod93.easytrans.MapSelectionActivity"/>
 
 
     <android.support.design.widget.FloatingActionButton

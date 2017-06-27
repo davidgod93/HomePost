@@ -31,7 +31,7 @@ public class Users {
 				k = a.getString(i);
 				ju = j.getJSONObject(k);
 				addr = ju.getJSONObject("address");
-				map.put(k, new User(k, ju.getString("nombre"), ju.getString("mail"), ju.getString("tipo"), ju.getInt("imagen"), addr.getDouble("lat"), addr.getDouble("lng")));
+				map.put(k, new User(k, ju.getString("nombre"), ju.getString("mail"), ju.getString("tipo"), ju.getString("token"), ju.getInt("imagen"), addr.getDouble("lat"), addr.getDouble("lng")));
 			}
 		} catch (JSONException e) { e.printStackTrace(); }
 	}
@@ -54,6 +54,24 @@ public class Users {
 			Logger.error("Problema serializando los mappings de los nombres. "+e.toString());
 		}
 		return a.toString();
+	}
+
+	public String[] getTokens() {
+		String[] t = new String[map.size()];
+		int i = 0;
+		for (Map.Entry<String, User> e : map.entrySet()) {
+			t[i++] = map.get(e.getKey()).token;
+		}
+		return t;
+	}
+
+	public String[] getNames() {
+		String[] t = new String[map.size()];
+		int i = 0;
+		for (Map.Entry<String, User> e : map.entrySet()) {
+			t[i++] = map.get(e.getKey()).name;
+		}
+		return t;
 	}
 
 	public static Map<String, String> deserializeMappings(String json) {

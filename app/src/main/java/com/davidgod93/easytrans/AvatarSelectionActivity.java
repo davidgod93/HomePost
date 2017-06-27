@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.content.Intent;
 import android.os.Bundle;

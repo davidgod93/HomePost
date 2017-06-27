@@ -1,30 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.davidgod93.homepost.GenerateOrderActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:onClick="mapBtn"
-        android:text="Select map position"/>
+        tools:context="com.davidgod93.easytrans.GenerateOrderActivity">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:onClick="uploadBtn"
-        android:text="Test dummy order upload"/>
+        <TextView
+            android:textSize="24sp"
+            android:text="@string/introduce_los_datos_del_encargo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</RelativeLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ago_description"
+                android:hint="@string/descripci_n_del_encargo"
+                android:inputType="textCapSentences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="mapBtn">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/ago_pick_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:onClick="mapBtn"
+                android:src="@android:drawable/ic_menu_mylocation"
+                app:fabSize="mini"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_toStartOf="@id/ago_pick_map"
+                android:layout_marginEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ago_destination"
+                    android:hint="@string/destino_del_paquete"
+                    android:enabled="false"
+                    android:inputType="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <!--
+            <ImageView
+                android:id="@+id/ago_pick_map2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/map_pick_button_cd"
+                android:onClick="mapBtn"
+                android:src="@drawable/ic_place_blue_200_36dp"/>
+            -->
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/ago_receiver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- mapBtn y uploadBtn -->
+
+    </LinearLayout>
+
+</ScrollView>

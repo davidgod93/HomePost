@@ -65,6 +65,13 @@
                 android:onClick="showListOrders"
                 android:text="@string/mostrar_estado_de_mis_env_os"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="chatWithUser"
+                android:text="@string/chatear_con_trabajador"/>
+
         </LinearLayout>
 
         <!-- Layout for workers -->
@@ -83,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:onClick="nearOrders"
                 android:text="@string/mostrar_trabajos_cercanos"/>
 
             <Button
@@ -92,6 +100,13 @@
                 android:layout_margin="10dp"
                 android:onClick="showListOrders"
                 android:text="@string/mostrar_estado_de_mis_trabajos"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="chatWithUser"
+                android:text="@string/chatear_con_trabajador"/>
 
         </LinearLayout>
 

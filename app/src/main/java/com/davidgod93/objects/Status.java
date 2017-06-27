@@ -3,7 +3,7 @@ package com.davidgod93.objects;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.davidgod93.homepost.R;
+import com.davidgod93.easytrans.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Status {
 
 	public static final Status getDefault = new Status(STATUS_PREPARING);
 
-	Status(int status) {
+	public Status(int status) {
 		this.status = status;
 	}
 

@@ -1,4 +1,4 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,12 +45,13 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 	private FirebaseDatabase db;
 	private User u;
 	private Map<String, String> m;
-	private View w;
+	private View w, v;
 	private RelativeLayout ly;
+	private MenuItem mi, miW;
 	private List<Order> l;
 	private String[] titles;
 	private LatLng latLng;
-	private View v;
+	private int idxOrder = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,34 +76,53 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.order_list_menu, menu);
+		mi = menu.getItem(0);
+		miW = menu.getItem(1);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.olm_change) {
-			if (titles.length > 1)
+		switch (item.getItemId()) {
+			case R.id.olm_change:
+				if (titles.length > 1)
+					new AlertDialog.Builder(this)
+							.setTitle("Selecciona el envío a consultar")
+							.setItems(titles, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									fillData(which, titles[which]);
+								}
+							})
+							.show();
+				else Toast.makeText(this, R.string.no_items_to_change, Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.olm_change_status:
 				new AlertDialog.Builder(this)
-						.setTitle("Selecciona el envío a consultar")
-						.setItems(titles, new DialogInterface.OnClickListener() {
+						.setTitle("Selecciona el nuevo estado")
+						.setItems(R.array.status_modes, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								fillData(which, titles[which]);
+								Order o = l.get(idxOrder);
+								o.status = new Status(which);
+								o.updateStatus();
+								String n = "Envío #" + idxOrder + "#" + o.id;
+								fillData(idxOrder, n);
 							}
 						})
 						.show();
-			else Toast.makeText(this, R.string.no_items_to_change, Toast.LENGTH_SHORT).show();
+				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	private void getData() {
-		db.getReference("orders").addValueEventListener(new ValueEventListener() {
+		db.getReference("orders").addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
 				JSONObject j = Chest.parseDBResponse(dataSnapshot);
 				if (j.length() > 0) {
-					l = Order.getOrdersFrom(j, u.uid);
+					l = Order.getOrdersFrom(j, u.uid, u.isWorker());
 					Collections.sort(l);
 					updateNames();
 				} else new AlertDialog.Builder(ShowOrdersActivity.this)
@@ -144,8 +164,13 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 	}
 
 	private void setSpinnerTitles() {
-		titles = new String[l.size()];
-		for (Order o : l) titles[l.indexOf(o)] = "Envío #" + l.indexOf(o) + "#" + o.id;
+		int n = l.size();
+		titles = new String[n];
+		for (Order o : l) titles[l.indexOf(o)] = "Envío #" + n-- + "#" + o.id;
+		if(titles.length > 1 && mi != null) {
+			mi.setVisible(true);
+			if(u.isWorker()) miW.setVisible(true);
+		}
 		fillData(0, titles[0]);
 	}
 
@@ -153,8 +178,9 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 		if (v == null) v = getLayoutInflater().inflate(R.layout.aso_order_content, null);
 		final Order o = l.get(pos);
 		setTitle(title);
+		idxOrder = pos;
 		TextView sender = (TextView) v.findViewById(R.id.elvc_sender);
-		sender.setText(o.getSender(this.getResources()));
+		sender.setText(o.getSender());
 		TextView receiver = (TextView) v.findViewById(R.id.elvc_receiver);
 		receiver.setText(o.getReceiver(this.getResources()));
 		TextView worker = (TextView) v.findViewById(R.id.elvc_worker);
@@ -209,4 +235,6 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 			}
 		});
 	}
+
+
 }

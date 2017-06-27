@@ -1,7 +1,9 @@
-package com.davidgod93.homepost;
+package com.davidgod93.easytrans;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +14,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.davidgod93.objects.User;
+import com.davidgod93.utils.Logger;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -46,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
 			else if (MAP_REQUEST_CODE == requestCode) {
 				u.lat = data.getDoubleExtra(MapSelectionActivity.LAT_KEY, 0.0);
 				u.lng = data.getDoubleExtra(MapSelectionActivity.LNG_KEY, 0.0);
-				address.setText(getLatitudeText(u.lat, u.lng));
+				getLatitudeText(u.lat, u.lng);
 			}
 		}
 
@@ -114,12 +120,44 @@ public class ProfileActivity extends AppCompatActivity {
 	private void setUserValues() {
 		name.setText(u.name);
 		mail.setText(u.mail);
-		address.setText(getLatitudeText(u.lat, u.lng));
+		getLatitudeText(u.lat, u.lng);
 		Picasso.with(this).load(u.image).error(User.DEFAULT_IMAGE).into(avatar);
 	}
 
-	private String getLatitudeText(double lt, double ln) {
-		DecimalFormat newFormat = new DecimalFormat("#.##");
-		return "lat("+Double.valueOf(newFormat.format(lt))+"),lng("+Double.valueOf(newFormat.format(ln))+")";
+	private void getLatitudeText(double lt, double ln) {
+		address.setText(R.string.retreiving_address);
+		getAddressNameInBackground(lt, ln);
+	}
+
+	private String getLatitudeTextAux(double lt, double ln) throws IOException {
+		Geocoder g = new Geocoder(this, Locale.getDefault());
+		List<Address> l = g.getFromLocation(lt, ln, 10);
+		String r;
+		if (l.size() > 0) {
+			r = l.get(0).getAddressLine(0);
+		}
+		else {
+			DecimalFormat newFormat = new DecimalFormat("#.##");
+			r = "lat("+newFormat.format(lt)+"),lng("+newFormat.format(ln)+")";
+		}
+		return r;
+	}
+
+	private void getAddressNameInBackground(final double lt, final double ln) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					final String n = getLatitudeTextAux(lt, ln);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							address.setText(n);
+						}
+					});
+				} catch (Exception e) { Logger.error("Error obteniendo la dirección del usuario. "+e.toString()); }
+
+			}
+		}).start();
 	}
 }

@@ -8,7 +8,7 @@
 
     <!-- Waiting initial layout -->
     <LinearLayout
-        android:id="@+id/aso_loading_view"
+        android:id="@+id/ano_loading_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
 
     <!-- Layout to inflate with data -->
     <RelativeLayout
-        android:id="@+id/aso_content_view"
+        android:id="@+id/ano_content_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
