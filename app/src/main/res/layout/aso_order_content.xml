@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,65 +16,116 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_margin="5dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="@string/remitente"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/remitente_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/user_chat_btn"
+                    app:srcCompat="@drawable/ic_message_blue_300_36dp"/>
 
-                <TextView
-                    android:id="@+id/elvc_sender"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/remitente_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <TextView
+                        android:text="@string/remitente"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-            <LinearLayout
+                    <TextView
+                        android:id="@+id/elvc_sender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_margin="5dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="@string/destinatario"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/destinatario_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/user_chat_btn"
+                    app:srcCompat="@drawable/ic_message_blue_300_36dp"/>
 
-                <TextView
-                    android:id="@+id/elvc_receiver"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/destinatario_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <TextView
+                        android:text="@string/destinatario"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-            <LinearLayout
+                    <TextView
+                        android:id="@+id/elvc_receiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_margin="5dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="@string/encargado_del_reparto"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                <ImageView
+                    android:id="@+id/worker_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/user_chat_btn"
+                    app:srcCompat="@drawable/ic_message_blue_300_36dp"/>
 
-                <TextView
-                    android:id="@+id/elvc_worker"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/worker_msg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <TextView
+                        android:text="@string/encargado_del_reparto"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/elvc_worker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_margin="5dp"

@@ -1,10 +1,12 @@
-package com.davidgod93.easytrans;
+package com.davidgod93.objects;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.davidgod93.easytrans.AvatarSelectionActivity;
+import com.davidgod93.easytrans.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -122,7 +122,7 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 			public void onDataChange(DataSnapshot dataSnapshot) {
 				JSONObject j = Chest.parseDBResponse(dataSnapshot);
 				if (j.length() > 0) {
-					l = Order.getOrdersFrom(j, u.uid, u.isWorker());
+					l = Order.getOrdersFrom(j, u.uid);
 					Collections.sort(l);
 					updateNames();
 				} else new AlertDialog.Builder(ShowOrdersActivity.this)
@@ -169,7 +169,6 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 		for (Order o : l) titles[l.indexOf(o)] = "Envío #" + n-- + "#" + o.id;
 		if(titles.length > 1 && mi != null) {
 			mi.setVisible(true);
-			if(u.isWorker()) miW.setVisible(true);
 		}
 		fillData(0, titles[0]);
 	}
@@ -179,11 +178,45 @@ public class ShowOrdersActivity extends AppCompatActivity implements OnMapReadyC
 		final Order o = l.get(pos);
 		setTitle(title);
 		idxOrder = pos;
+		miW.setVisible(u.isWorker() && u.uid.equals(o.worker));
 		TextView sender = (TextView) v.findViewById(R.id.elvc_sender);
+		ImageView msgSender = (ImageView) v.findViewById(R.id.remitente_msg);
+		msgSender.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(ShowOrdersActivity.this, ChatActivity.class)
+								.putExtra("token", o.sender)
+								.putExtra("mytoken", u.token)
+								.putExtra("name", u.name));
+			}
+		});
+		msgSender.setVisibility(u.uid.equals(o.sender) ? View.GONE : View.VISIBLE);
 		sender.setText(o.getSender());
 		TextView receiver = (TextView) v.findViewById(R.id.elvc_receiver);
+		ImageView msgReceiver = (ImageView) v.findViewById(R.id.destinatario_msg);
+		msgReceiver.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(ShowOrdersActivity.this, ChatActivity.class)
+						.putExtra("token", o.receiver)
+						.putExtra("mytoken", u.token)
+						.putExtra("name", u.name));
+			}
+		});
+		msgReceiver.setVisibility(o.receiver == null || u.uid.equals(o.receiver) ? View.GONE : View.VISIBLE);
 		receiver.setText(o.getReceiver(this.getResources()));
 		TextView worker = (TextView) v.findViewById(R.id.elvc_worker);
+		ImageView msgWorker = (ImageView) v.findViewById(R.id.worker_msg);
+		msgWorker.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(ShowOrdersActivity.this, ChatActivity.class)
+						.putExtra("token", o.worker)
+						.putExtra("mytoken", u.token)
+						.putExtra("name", u.name));
+			}
+		});
+		msgWorker.setVisibility(o.worker == null || u.uid.equals(o.worker) ? View.GONE : View.VISIBLE);
 		worker.setText(o.getWorker(this.getResources()));
 		SupportMapFragment m = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.aso_map_fragment);
 		latLng = o.coords;

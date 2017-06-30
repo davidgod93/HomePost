@@ -1,4 +1,4 @@
-package com.davidgod93.easytrans;
+package com.davidgod93.objects;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
-import com.davidgod93.objects.Chat;
 import com.davidgod93.utils.Logger;
 
 import java.math.BigInteger;

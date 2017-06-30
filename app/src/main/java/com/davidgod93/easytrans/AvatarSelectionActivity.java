@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.davidgod93.objects.AvatarAdapter;
 import com.davidgod93.utils.Chest;
 
 import java.util.Arrays;

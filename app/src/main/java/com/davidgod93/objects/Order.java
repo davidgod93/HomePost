@@ -26,12 +26,12 @@ import java.util.Map;
 public class Order implements Comparable<Order> {
 
 	public static String ORDER_INTENT = "order-serialization";
-	public String id, sender, receiver, worker, description;
+	public String id, sender, receiver, worker, description, senderMap, receiverMap, workerMap;
 	public Date date;
 	public Status status;
 	public LatLng coords;
 
-	public static List<Order> getOrdersFrom(JSONObject j, String uid, boolean isWorker) {
+	public static List<Order> getOrdersFrom(JSONObject j, String uid) {
 		List<Order> l = new ArrayList<>();
 		JSONArray jj = j.names();
 		JSONObject jo, d;
@@ -51,7 +51,7 @@ public class Order implements Comparable<Order> {
 						d.getDouble("lat"),
 						d.getDouble("lng"),
 						jo.getLong("date"));
-				if(o.isInvolved(uid, isWorker)) l.add(o);
+				if(o.isInvolved(uid)) l.add(o);
 			}
 		} catch (Exception e) {
 			Logger.error("Error parseando JSON: "+e.toString());
@@ -102,34 +102,38 @@ public class Order implements Comparable<Order> {
 		this.date = new Date(date);
 	}
 
-	private boolean isInvolved(@NonNull String uid, boolean isWorker) {
-		return isWorker ? uid.equals(this.worker) : (uid.equals(this.receiver) || uid.equals(this.sender));
-	}
-
-	public boolean hasWorker() {
-		return worker != null;
+	private boolean isInvolved(@NonNull String uid) {
+		return uid.equals(this.worker) || (uid.equals(this.receiver) || uid.equals(this.sender));
 	}
 
 	public String getSender() {
-		return sender;
+		return senderMap;
 	}
 
 	public String getReceiver(Resources r) {
-		return receiver != null ? receiver : r.getString(R.string.sin_receptor_especificado);
+		return hasReceiver() ? receiverMap : r.getString(R.string.sin_receptor_especificado);
 	}
 
 	public String getWorker(Resources r) {
-		return worker != null ? worker : r.getString(R.string.no_worker_yet);
+		return hasWorker() ? workerMap : r.getString(R.string.no_worker_yet);
 	}
 
 	public String getDescription(Resources r) {
 		return description != null ? description : r.getString(R.string.without_description);
 	}
 
+	public boolean hasReceiver() {
+		return receiver != null;
+	}
+
+	public boolean hasWorker() {
+		return worker != null;
+	}
+
 	public void applyMappings(Map<String, String> map) {
-		if (map.get(sender) != null) sender = map.get(sender);
-		if (map.get(receiver) != null) receiver = map.get(receiver);
-		if (map.get(worker) != null) worker = map.get(worker);
+		if (map.get(sender) != null) senderMap = map.get(sender);
+		if (map.get(receiver) != null) receiverMap = map.get(receiver);
+		if (map.get(worker) != null) workerMap = map.get(worker);
 	}
 
 	public String serialize() {

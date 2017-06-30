@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.davidgod93.objects.Chat;
 import com.davidgod93.objects.ChatAdapter;
+import com.davidgod93.objects.Database;
 import com.davidgod93.services.Push;
 
 import org.json.JSONException;

@@ -125,4 +125,5 @@
     <string name="order_without_description">Encargo sin descripción</string>
     <string name="retreiving_address">Obteniendo la dirección</string>
     <string name="order_from">Encargo de</string>
+    <string name="user_chat_btn">Chatear con usuario</string>
 </resources>
